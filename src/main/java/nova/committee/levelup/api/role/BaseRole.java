@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import nova.committee.levelup.api.skill.IPlayerSkill;
-import nova.committee.levelup.api.PlayerSkillStorage;
+import nova.committee.levelup.api.skill.PlayerSkillStorage;
 
 import javax.annotation.Nonnull;
 import java.util.List;

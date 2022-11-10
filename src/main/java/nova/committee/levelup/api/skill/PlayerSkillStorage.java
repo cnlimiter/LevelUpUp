@@ -1,9 +1,8 @@
-package nova.committee.levelup.api;
+package nova.committee.levelup.api.skill;
 
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import nova.committee.levelup.api.skill.IPlayerSkill;
 
 /**
  * Project: levelup

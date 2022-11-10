@@ -1,6 +1,8 @@
 package nova.committee.levelup.init.handler;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -15,6 +17,7 @@ import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import nova.committee.levelup.init.registry.SkillRegistry;
 
 /**
  * Project: levelup
@@ -56,16 +59,16 @@ public class CombatSkillHandler {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onBowUse(ArrowNockEvent evt) {
-        int archery = SkillRegistry.getSkillLevel(evt.getPlayer(), ARROWDRAW);
-        if (archery > 0 && SkillRegistry.getPlayer(evt.getPlayer()).isActive()) {
-            evt.getPlayer().setActiveHand(evt.getHand());
-            setItemUseCount(evt.getPlayer(), (int)(archery / CapabilityEventHandler.getDivisor(ARROWDRAW)));
-            evt.setAction(new ActionResult<>(EnumActionResult.SUCCESS, evt.getBow()));
+        int archery = SkillRegistry.getSkillLevel(evt.getEntity(), ARROWDRAW);
+        if (archery > 0 && SkillRegistry.getPlayer(evt.getEntity()).isActive()) {
+            evt.getEntity().setItemInHand(evt.getHand(), evt.getBow());
+            setItemUseCount(evt.getEntity(), (int)(archery / CapabilityEventHandler.getDivisor(ARROWDRAW)));
+            evt.setAction(new InteractionResultHolder<>(InteractionResult.SUCCESS, evt.getBow()));
         }
     }
 
     private void setItemUseCount(Player player, int archery) {
-        player.getUseItem().setCount(player.getUseItem().getCount() - archery);
+        player.useItemRemaining -= archery;
     }
 
     @SubscribeEvent
